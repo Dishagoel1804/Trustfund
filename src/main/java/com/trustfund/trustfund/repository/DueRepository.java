@@ -12,4 +12,6 @@ public interface DueRepository extends JpaRepository<Due, Long> {
     List<Due> findBySocietyId(Long societyId);
 
     List<Due> findByStatus(String status);
+
+    List<Due> findByDeletedFalse();
 }

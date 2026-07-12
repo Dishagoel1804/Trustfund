@@ -47,8 +47,4 @@ public class DisputeController {
         return disputeService.resolveDispute(id, resolutionNotes, finalStatus);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteDispute(@PathVariable Long id) {
-        disputeService.deleteDispute(id);
-    }
 }

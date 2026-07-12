@@ -48,4 +48,9 @@ public class Due {
 
     public Society getSociety() { return society; }
     public void setSociety(Society society) { this.society = society; }
+
+    private Boolean deleted = false;
+
+    public Boolean getDeleted() { return deleted; }
+    public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 }

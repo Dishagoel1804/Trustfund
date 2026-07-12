@@ -63,7 +63,10 @@ public class SecurityConfig {
 
                         // Anomaly flags — ADMIN/TREASURER/COMMITTEE can manage; residents should not see or create these
                         .requestMatchers("/api/anomaly-flags/**").hasAnyRole("ADMIN", "TREASURER", "COMMITTEE")
-                        
+
+                        // User activation/deactivation — only ADMIN can do this
+                        .requestMatchers(HttpMethod.PUT, "/api/users/*/activate").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/*/deactivate").hasRole("ADMIN")
                         // Everything else just needs to be logged in
                         .anyRequest().authenticated()
                 )

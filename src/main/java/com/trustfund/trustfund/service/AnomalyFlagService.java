@@ -50,8 +50,5 @@ public class AnomalyFlagService {
         return anomalyFlagRepository.save(flag);
     }
 
-    public void deleteFlag(Long id) {
-        AnomalyFlag flag = getFlagById(id);
-        anomalyFlagRepository.delete(flag);
-    }
+
 }

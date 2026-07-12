@@ -53,8 +53,4 @@ public class AnomalyFlagController {
         return anomalyFlagService.reviewFlag(id, finalStatus, reviewedByEmail);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteFlag(@PathVariable Long id) {
-        anomalyFlagService.deleteFlag(id);
-    }
 }

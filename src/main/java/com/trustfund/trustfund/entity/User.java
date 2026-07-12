@@ -14,6 +14,7 @@ public class User {
     private String flatNumber;
     private String role;
     private String password;
+    private Boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "society_id")
@@ -40,4 +41,7 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

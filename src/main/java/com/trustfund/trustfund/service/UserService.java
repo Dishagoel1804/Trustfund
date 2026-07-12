@@ -55,4 +55,28 @@ public class UserService {
         auditLogService.logAction("DELETE_USER", "User", id, performedBy,
                 "Deleted user: " + existing.getFullName());
     }
+
+    public User deactivateUser(Long id) {
+        User user = getUserById(id);
+        user.setActive(false);
+        User saved = userRepository.save(user);
+
+        String performedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        auditLogService.logAction("DEACTIVATE_USER", "User", id, performedBy,
+                "Deactivated user: " + saved.getFullName());
+
+        return saved;
+    }
+
+    public User activateUser(Long id) {
+        User user = getUserById(id);
+        user.setActive(true);
+        User saved = userRepository.save(user);
+
+        String performedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        auditLogService.logAction("ACTIVATE_USER", "User", id, performedBy,
+                "Activated user: " + saved.getFullName());
+
+        return saved;
+    }
 }

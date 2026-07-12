@@ -35,6 +35,14 @@ public class AuthController {
             return ResponseEntity.status(401).body(error);
         }
 
+
+
+        if (Boolean.FALSE.equals(user.getActive())) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", "This account has been deactivated. Please contact your society admin.");
+            return ResponseEntity.status(403).body(error);
+        }
+
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
 
         Map<String, String> response = new HashMap<>();

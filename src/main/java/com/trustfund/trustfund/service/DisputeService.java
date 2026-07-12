@@ -57,8 +57,4 @@ public class DisputeService {
         return saved;
     }
 
-    public void deleteDispute(Long id) {
-        Dispute dispute = getDisputeById(id);
-        disputeRepository.delete(dispute);
-    }
 }

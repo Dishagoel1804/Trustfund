@@ -4,6 +4,7 @@ import com.trustfund.trustfund.entity.Due;
 import com.trustfund.trustfund.exception.ResourceNotFoundException;
 import com.trustfund.trustfund.repository.DueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +15,25 @@ public class DueService {
     @Autowired
     private DueRepository dueRepository;
 
+    @Autowired
+    private AuditLogService auditLogService;
+
+
+
     public Due createDue(Due due) {
         return dueRepository.save(due);
     }
 
-    public List<Due> getAllDues() {
-        return dueRepository.findAll();
-    }
 
     public Due getDueById(Long id) {
-        return dueRepository.findById(id)
+        Due due = dueRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Due not found with id: " + id));
+
+        if (Boolean.TRUE.equals(due.getDeleted())) {
+            throw new ResourceNotFoundException("Due not found with id: " + id);
+        }
+
+        return due;
     }
 
     public List<Due> getDuesByUser(Long userId) {
@@ -50,8 +59,18 @@ public class DueService {
         return dueRepository.save(due);
     }
 
+
+    public List<Due> getAllDues() {
+        return dueRepository.findByDeletedFalse();
+    }
+
     public void deleteDue(Long id) {
         Due due = getDueById(id);
-        dueRepository.delete(due);
+        due.setDeleted(true);
+        dueRepository.save(due);
+
+        String performedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        auditLogService.logAction("SOFT_DELETE_DUE", "Due", id, performedBy,
+                "Soft-deleted due of amount: " + due.getAmount());
     }
 }

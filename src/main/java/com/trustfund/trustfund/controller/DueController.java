@@ -1,11 +1,14 @@
 package com.trustfund.trustfund.controller;
 
 import com.trustfund.trustfund.entity.Due;
+import com.trustfund.trustfund.service.AuditLogService;
 import com.trustfund.trustfund.service.DueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/dues")
@@ -13,6 +16,8 @@ public class DueController {
 
     @Autowired
     private DueService dueService;
+
+
 
     @PostMapping
     public Due createDue(@RequestBody Due due) {

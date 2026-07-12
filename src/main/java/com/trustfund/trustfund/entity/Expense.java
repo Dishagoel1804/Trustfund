@@ -11,6 +11,7 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean deleted = false;
     private String description;
     private BigDecimal amount;
     private String category;
@@ -56,4 +57,7 @@ public class Expense {
 
     public Society getSociety() { return society; }
     public void setSociety(Society society) { this.society = society; }
+
+    public Boolean getDeleted() { return deleted; }
+    public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 }
